@@ -1,28 +1,60 @@
-
 document.addEventListener('DOMContentLoaded', () => {
-    const menuBtn = document.getElementById('menuBtn');
-    const sidebar = document.getElementById('sidebar') || document.querySelector('.sidebar');
+    const togglePassword = document.querySelector('.toggle-password');
+    const passwordInput = document.getElementById('password');
 
-    if (menuBtn && sidebar) {
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (window.innerWidth <= 768) {
-                sidebar.classList.toggle('active'); // Mobile slide-in
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                togglePassword.textContent = 'Hide';
             } else {
-                sidebar.classList.toggle('collapsed'); // Desktop shrink
+                passwordInput.type = 'password';
+                togglePassword.textContent = 'Show';
             }
         });
     }
 
-    // Auto-close sidebar on mobile when clicking content
-    document.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768 && sidebar && !sidebar.contains(e.target)) {
-            sidebar.classList.remove('active');
-        }
-    });
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const mobile = document.getElementById('mobile').value;
 
-    // Ensure mobile state resets on resize
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768 && sidebar) sidebar.classList.remove('active');
-    });
+            if (!validateEmail(email)) {
+                alert('Invalid email format');
+                return;
+            }
+
+            if (password.length !== 6 || !/\d{6}/.test(password)) {
+                alert('Password must be 6 digits');
+                return;
+            }
+
+            if (mobile.length !== 10 || !/\d{10}/.test(mobile)) {
+                alert('Mobile number must be 10 digits');
+                return;
+            }
+
+            // Simulate successful registration and redirect
+            alert('Registration successful!');
+            window.location.href = 'login.html';
+        });
+    }
+
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Simulate successful login and redirect
+            alert('Login successful!');
+            window.location.href = 'dashboard.html';
+        });
+    }
 });
+
+function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YCIS Alumni Portal</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .header {
+            background-color: #001f3f;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+        }
+
+        .sidebar {
+            background-color: #001f3f;
+            color: white;
+            width: 200px;
+            height: 100vh;
+            position: fixed;
+            padding-top: 1rem;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 1rem;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #f39c12;
+            color: #001f3f;
+        }
+
+        .sidebar a.active {
+            background-color: #f39c12;
+            color: #001f3f;
+        }
+
+        .main-content {
+            margin-left: 220px; /* sidebar width + padding */
+            padding: 1rem;
+        }
+
+        .loader {
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #f39c12; /* Orange */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: 100px; /* Adjust for sidebar */
+            margin-top: -25px;
+            display: none; /* Hidden by default */
+        }
+        
+        .card-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex-basis: 250px;
+            text-align: center;
+        }
+        
+        .card h3 {
+            margin-top: 0;
+            color: #001f3f;
+        }
+
+        .card p {
+            font-size: 2rem;
+            color: #f39c12;
+            margin: 10px 0;
+        }
+
+        .card button {
+            background: #001f3f;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .course-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+             border-left: 5px solid #001f3f;
+        }
+
+        .event-list-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+             border-left: 5px solid #f39c12;
+        }
+
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="clg/logo.png" alt="YCIS Logo" class="logo">
+        <h1>YCIS Alumni Portal</h1>
+    </div>
+
+    <div class="sidebar">
+        <a href="#dashboard" class="active">Dashboard</a>
+        <a href="#courses">Courses</a>
+        <a href="#events">Events</a>
+        <a href="#report">Report</a>
+    </div>
+
+    <div class="main-content">
+        <div class="loader"></div>
+        <div id="content"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const content = document.getElementById('content');
+            const loader = document.querySelector('.loader');
+            const sidebarLinks = document.querySelectorAll('.sidebar a');
+
+            // --- ROUTING ---
+            const router = async () => {
+                // Get the hash from the URL
+                const route = window.location.hash || '#dashboard';
+                
+                // Find the link that matches the route and set it as active
+                updateActiveLink(route);
+                
+                // Show loader and clear content
+                loader.style.display = 'block';
+                content.innerHTML = '';
+
+                try {
+                    if (route.startsWith('#course-details')) {
+                        const courseId = parseInt(route.split('/')[1], 10);
+                        await renderCourseDetails(courseId);
+                    } else {
+                        switch (route) {
+                            case '#dashboard':
+                                await renderDashboard();
+                                break;
+                            case '#courses':
+                                await renderCourses();
+                                break;
+                            case '#events':
+                                await renderEvents();
+                                break;
+                            case '#report':
+                                renderReport();
+                                break;
+                            default:
+                                content.innerHTML = '<h2>404 Not Found</h2>';
+                        }
+                    }
+                } catch (error) {
+                    console.error('Failed to render page:', error);
+                    content.innerHTML = '<h2>Error loading content</h2><p>Could not fetch data from the server. Please try again later.</p>';
+                } finally {
+                    loader.style.display = 'none';
+                }
+            };
+
+            // --- RENDERING FUNCTIONS ---
+            
+            const renderDashboard = async () => {
+                const response = await fetch('/api/dashboard-stats');
+                if (!response.ok) throw new Error('Failed to fetch dashboard stats');
+                const stats = await response.json();
+
+                content.innerHTML = `
+                    <h2>Dashboard</h2>
+                    <div class="card-container">
+                        <div class="card">
+                            <h3>Total Courses</h3>
+                            <p>${stats.totalCourses}</p>
+                            <button onclick="window.location.hash='#courses'">View Courses</button>
+                        </div>
+                        <div class="card">
+                            <h3>Upcoming Events</h3>
+                            <p>${stats.totalEvents}</p>
+                            <button onclick="window.location.hash='#events'">View Events</button>
+                        </div>
+                        <div class="card">
+                            <h3>Alumni Registered</h3>
+                            <p>${stats.totalAlumni}</p>
+                            <button onclick="window.location.hash='#report'">View Report</button>
+                        </div>
+                    </div>
+                `;
+            };
+
+            const renderCourses = async () => {
+                const response = await fetch('/api/course-list');
+                if (!response.ok) throw new Error('Failed to fetch courses');
+                const courses = await response.json();
+                
+                let courseItems = courses.map(course => `
+                    <div class="course-item">
+                        <h3>${course.courseName}</h3>
+                        <p>${course.description}</p>
+                        <button onclick="window.location.hash='#course-details/${course.courseId}'">View Details</button>
+                    </div>
+                `).join('');
+
+                content.innerHTML = `
+                    <h2>Courses</h2>
+                    <div class="course-grid">${courseItems}</div>
+                `;
+            };
+
+            const renderCourseDetails = async (courseId) => {
+                const response = await fetch(`/api/course/${courseId}`);
+                if (!response.ok) throw new Error('Failed to fetch course details');
+                const course = await response.json();
+
+                content.innerHTML = `
+                    <h2>${course.courseName}</h2>
+                    <p>${course.details}</p>
+                    <a href="#courses">Back to Courses</a>
+                `;
+            };
+
+            const renderEvents = async () => {
+                const response = await fetch('/api/events');
+                 if (!response.ok) throw new Error('Failed to fetch events');
+                const events = await response.json();
+
+                let eventItems = events.map(event => `
+                    <div class="event-list-item">
+                        <h3>${event.eventName}</h3>
+                        <p><strong>Date:</strong> ${new Date(event.eventDate).toLocaleDateString()}</p>
+                        <p><strong>Location:</strong> ${event.location}</p>
+                        <p>${event.description}</p>
+                    </div>
+                `).join('');
+                
+                content.innerHTML = `
+                    <h2>Upcoming Events</h2>
+                    <div class="event-list">${eventItems}</div>
+                `;
+            };
+
+            const renderReport = () => {
+                content.innerHTML = `
+                    <h2>Alumni Registration Report</h2>
+                    <p>This section will contain data tables or graphical summaries of alumni registrations.</p>
+                    <!-- You can add a placeholder for a chart or table here -->
+                `;
+            };
+
+            // --- HELPER FUNCTIONS ---
+
+            const updateActiveLink = (route) => {
+                sidebarLinks.forEach(link => {
+                    if (link.getAttribute('href') === route) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            };
+            
+            // --- EVENT LISTENERS ---
+
+            // Listen for hash changes to navigate
+            window.addEventListener('hashchange', router);
+
+            // Initial load
+            router(); 
+        });
+    </script>
+</body>
+</html>
