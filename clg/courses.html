@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - YCIS College System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<nav class="menu">
+    <a href="index.html"><i class="fas fa-home"></i> Dashboard</a> <a href="courses.html" class="active"><i class="fas fa-book"></i> Course</a>
+    <a href="#"><i class="fas fa-calendar-alt"></i> Events</a>
+    <a href="#"><i class="fas fa-clock"></i> Mock Test</a>
+    <a href="#"><i class="fas fa-users"></i> Alumni List</a>
+    <a href="#"><i class="fas fa-chart-line"></i> Report</a>
+</nav>
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="admin-profile">
+                <div class="profile-img"><i class="fas fa-user"></i></div>
+                <h3>Admin</h3>
+                <p>admin@gmail.com</p>
+            </div>
+            <nav class="menu">
+                <a href="index.html"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="courses.html" class="active"><i class="fas fa-book"></i> Course</a>
+                <a href="#"><i class="fas fa-calendar-alt"></i> Events</a>
+                <a href="#"><i class="fas fa-clock"></i> Mock Test</a>
+                <a href="#"><i class="fas fa-users"></i> Alumni List</a>
+                <a href="#"><i class="fas fa-chart-line"></i> Report</a>
+            </nav>
+        </aside>
+
+        <main class="main-area">
+            <header class="top-header">
+                <div class="header-left">
+                    <i class="fas fa-bars toggle-btn" id="menuBtn"></i>
+                    <div class="ycis-logo">
+                        <img src="ycis_logo.png" alt="YCIS Logo">
+                    </div>
+                </div>
+                <div class="header-center">
+                    <h1>YASHWANTRAO CHAVAN INSTITUTE OF SCIENCE SATARA</h1>
+                    <h2>DEPARTMENT OF COMPUTER SCIENCE (ENTIRE)</h2>
+                </div>
+                <div class="header-right">
+                    <div class="user-dropdown">
+                        <i class="fas fa-user-circle"></i> Admin <i class="fas fa-caret-down"></i>
+                    </div>
+                </div>
+            </header>
+
+            <section class="course-section">
+                <div class="section-header">
+                    <h2>Available Courses</h2>
+                </div>
+                
+                <div class="course-grid">
+                    <div class="course-card">
+                        <div class="course-image"><i class="fas fa-laptop-code"></i></div>
+                        <div class="course-info">
+                            <h3>B.Sc. Computer Science</h3>
+                            <p>3-year undergraduate program focusing on software and systems.</p>
+                            <button class="enroll-btn">View Syllabus</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-image"><i class="fas fa-database"></i></div>
+                        <div class="course-info">
+                            <h3>M.Sc. Computer Science</h3>
+                            <p>Postgraduate studies in data science and AI.</p>
+                            <button class="enroll-btn">View Syllabus</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card">
+                        <div class="course-image"><i class="fas fa-microchip"></i></div>
+                        <div class="course-info">
+                            <h3>BCA</h3>
+                            <p>Bachelor of Computer Applications focusing on web tech.</p>
+                            <button class="enroll-btn">View Syllabus</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

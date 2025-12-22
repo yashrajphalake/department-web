@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Alumni System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<nav class="menu">
+    <a href="index.html" class="active"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="courses.html"><i class="fas fa-book"></i> Course</a> <a href="#"><i class="fas fa-calendar-alt"></i> Events</a>
+    <a href="#"><i class="fas fa-clock"></i> Mock Test</a>
+    <a href="#"><i class="fas fa-users"></i> Alumni List</a>
+    <a href="#"><i class="fas fa-chart-line"></i> Report</a>
+</nav>
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="admin-profile">
+                <div class="profile-img"><i class="fas fa-user"></i></div>
+                <h3>Admin</h3>
+                <p>admin@gmail.com</p>
+            </div>
+                <nav class="menu">
+                <a href="index.html" class="active"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="courses.html"><i class="fas fa-book"></i> Course</a>
+                <a href="#"><i class="fas fa-calendar-alt"></i> Events</a>
+                <a href="#"><i class="fas fa-clock"></i> Mock Test</a>
+                <a href="#"><i class="fas fa-users"></i> Alumni List</a>
+                <a href="#"><i class="fas fa-chart-line"></i> Report</a>
+            </nav>
+        </aside>
+
+        <main class="main-area">
+            <header class="top-header">
+                <div class="header-left">
+                    <i class="fas fa-bars toggle-btn" id="menuBtn"></i>
+                    <div class="ycis-logo">
+                        <img src="logo.png" alt="YCIS Logo">
+                    </div>
+                </div>
+                <div class="header-center">
+                    <h1>YASHWANTRAO CHAVAN INSTITUTE OF SCIENCE SATARA</h1>
+                    <h2>DEPARTMENT OF COMPUTER SCIENCE (ENTIRE)</h2>
+                </div>
+                <div class="header-right">
+                    <div class="user-dropdown">
+                        <i class="fas fa-user-circle"></i> Admin <i class="fas fa-caret-down"></i>
+                    </div>
+                </div>
+            </header>
+
+            <section class="dashboard-content">
+                <div class="card-grid">
+                    <div class="card">
+                        <i class="fas fa-users icon-orange"></i>
+                        <span class="count">0</span>
+                        <span class="label">Total Course</span>
+                        <button class="view-btn">View Details</button>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-file-alt icon-purple"></i>
+                        <span class="count">0</span>
+                        <span class="label">Total Events</span>
+                        <button class="view-btn">View Details</button>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-clock icon-dark"></i>
+                        <span class="count">0</span>
+                        <span class="label">Mock Tests</span>
+                        <button class="view-btn">View Details</button>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-user-graduate icon-yellow"></i>
+                        <span class="count">0</span>
+                        <span class="label">Total Alumni Reg</span>
+                        <button class="view-btn">View Details</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+<script>
+    // Select the toggle button and the sidebar
+    const toggleBtn = document.querySelector('.toggle-btn');
+    const sidebar = document.querySelector('.sidebar');
+
+        // Add click event listener
+        toggleBtn.addEventListener('click', () => {
+            // Toggle the 'collapsed' class on the sidebar
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
