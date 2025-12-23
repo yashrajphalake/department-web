@@ -1,68 +1,205 @@
+
+/* Global Styles */
 body {
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #f4f7fa;
+    color: #333;
+}
+
+.container {
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #001f3f; /* Navy Blue */
+    color: #fff;
+    transition: width 0.3s;
+}
+
+.sidebar.collapsed {
+    width: 80px;
+}
+
+.admin-profile {
+    padding: 20px;
+    text-align: center;
+}
+
+.profile-img {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.menu a {
+    display: block;
+    padding: 15px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.menu a:hover, .menu a.active {
+    background-color: #f39c12; /* Orange */
+}
+
+/* Main Area */
+.main-area {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* Header */
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.toggle-btn {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.ycis-logo img {
+    height: 50px;
+}
+
+.header-center {
+    text-align: center;
+}
+
+.header-center h1, .header-center h2 {
+    margin: 0;
+    color: #001f3f; /* Navy Blue */
+}
+
+.user-dropdown {
+    cursor: pointer;
+}
+
+/* Dashboard */
+.dashboard-content .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.card .icon-orange { color: #f39c12; }
+.card .icon-purple { color: #8e44ad; }
+.card .icon-dark { color: #34495e; }
+.card .icon-yellow { color: #f1c40f; }
+
+.card .count {
+    display: block;
+    font-size: 36px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.view-btn {
     background-color: #001f3f;
     color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Courses */
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.course-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.course-card img {
+    width: 100%;
+}
+
+.course-card h3, .course-card p {
+    padding: 0 20px;
+}
+
+/* Login/Register */
+.login-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    margin: 0;
+    height: 100vh;
+    background-color: #001f3f;
 }
 
-.auth-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 2rem;
-}
-
-.auth-form {
+.login-box {
     background-color: #fff;
-    color: #333;
-    padding: 2rem;
+    padding: 40px;
     border-radius: 8px;
+    text-align: center;
+    width: 350px;
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #001f3f;
+.login-header img {
+    height: 80px;
+    margin-bottom: 20px;
 }
 
 .input-group {
-    margin-bottom: 1rem;
-}
-
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-input {
-    width: 100%;
-    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
-.toggle-password {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
+.input-group i {
+    padding: 10px;
+    color: #001f3f;
 }
 
-button {
+.input-group input {
+    border: none;
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.login-btn {
     width: 100%;
-    padding: 0.75rem;
-    background-color: #ff8c00;
+    padding: 15px;
+    background-color: #f39c12;
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 1rem;
 }
 
-a {
-    color: #ff8c00;
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        z-index: 1000;
+    }
+    .main-area {
+        margin-left: 80px;
+    }
 }

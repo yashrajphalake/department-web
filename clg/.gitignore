@@ -1,0 +1,15 @@
+
+# .NET Core
+bin/
+obj/
+
+# Node
+node_modules/
+
+# IDE files
+.vscode/
+.idea/
+
+# User-specific files
+*.user
+*.suo
